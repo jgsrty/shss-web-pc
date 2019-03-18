@@ -1,15 +1,10 @@
 <template>
-  <div>
-    test
-  </div>
+  <div>contain</div>
 </template>
 
 <script>
-  export default {
-    
-  }
+export default {};
 </script>
 
 <style scoped>
-
 </style>

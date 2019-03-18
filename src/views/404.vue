@@ -1,15 +1,10 @@
 <template>
-  <div>
-    test
-  </div>
+  <div>404 not found</div>
 </template>
 
 <script>
-  export default {
-    
-  }
+export default {};
 </script>
 
 <style scoped>
-
 </style>
