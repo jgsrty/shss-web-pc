@@ -1,0 +1,50 @@
+// 公共变量
+$primary-size-xlg: 20px;
+$primary-size-lg: 18px;
+$primary-size-md: 16px;
+$primary-size-xs: 14px;
+$primary-fontColor: #333333;
+$primary-bgColor: #fee407;
+
+//  公共样式
+.flex-center-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.flex-center {
+  display: flex;
+  justify-content: center;
+}
+.flex-align-center {
+  display: flex;
+  align-items: center;
+}
+.flex-justify-around {
+  display: flex;
+  justify-content: space-around;
+}
+.flex-justify-flex-end {
+  display: flex;
+  justify-content: flex-end;
+}
+.flex-direction-column {
+  display: flex;
+  flex-direction: column;
+}
+.flex-direction-reverse {
+  display: flex;
+  flex-direction: row-reverse;
+}
+.flex-justify-between {
+  display: flex;
+  justify-content: space-between;
+}
+.flex-wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+.flex-align-end {
+  display: flex;
+  align-items: flex-end;
+}
