@@ -25,7 +25,7 @@ export default new Router({
         {
           path: "home",
           component: r =>
-            require.ensure([], () => r(require("@/views/Home.vue"), "Home")),
+            require.ensure([], () => r(require("@/views/home.vue"), "Home")),
           meta: { title: "首页", url: "/home" }
         }
       ]
