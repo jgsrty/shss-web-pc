@@ -35,12 +35,13 @@ export default new Router({
       path: "/about",
       component: Layout,
       name: "About",
+      redirect: "/about/index",
       // hidden: true,
       children: [
         {
-          path: "home",
+          path: "index",
           component: r =>
-            require.ensure([], () => r(require("@/views/About/index.vue"), "Home")),
+            require.ensure([], () => r(require("@/views/About/index.vue"), "About")),
           meta: { title: "关于", url: "/about" }
         }
       ]

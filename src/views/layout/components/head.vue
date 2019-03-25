@@ -47,8 +47,12 @@ export default {
 <style scoped lang="scss">
 .header {
   height: 50px;
+  z-index: 10;
   align-items: center;
   padding: 0 20px;
+  position: fixed;
+  left: 0;
+  right: 0;
   .navs {
     span {
       margin-right: 20px;

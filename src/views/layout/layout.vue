@@ -1,9 +1,11 @@
 <template>
   <div class="app-layout">
-    <app-head></app-head>
-    <div class="contain">
-      <app-contain></app-contain>
-    </div>
+    <el-scrollbar ref="scrollBar">
+      <app-head></app-head>
+      <div class="contain">
+        <app-contain></app-contain>
+      </div>
+    </el-scrollbar>
   </div>
 </template>
 
@@ -14,11 +16,33 @@ export default {
   components: {
     appHead,
     appContain
+  },
+  watch: {
+    $route(to, from) {
+      console.log(this.$refs.scrollBar);
+      this.$refs["scrollBar"].wrap.scrollTop = 0;
+    }
   }
 };
 </script>
 
 <style lang="scss">
+html,
+body,
+#app,
+.app-layout,
+.el-scrollbar {
+  height: 100%;
+}
+.el-scrollbar__wrap {
+  overflow-x: hidden !important;
+}
+.app-layout {
+  position: relative;
+  .contain {
+    padding-top: 50px;
+  }
+}
 #nprogress {
   .bar {
     // background: red !important;
