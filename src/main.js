@@ -4,6 +4,7 @@ import router from "./router/index";
 import store from "./store/index";
 import "normalize.css/normalize.css";
 import "@/assets/font/iconfont.css";
+import "@/permission";
 
 Vue.config.productionTip = false;
 

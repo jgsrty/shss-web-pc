@@ -25,8 +25,23 @@ export default new Router({
         {
           path: "home",
           component: r =>
-            require.ensure([], () => r(require("@/views/home.vue"), "Home")),
+            require.ensure([], () => r(require("@/views/Home/index.vue"), "Home")),
           meta: { title: "首页", url: "/home" }
+        }
+      ]
+    },
+    //about
+    {
+      path: "/about",
+      component: Layout,
+      name: "About",
+      // hidden: true,
+      children: [
+        {
+          path: "home",
+          component: r =>
+            require.ensure([], () => r(require("@/views/About/index.vue"), "Home")),
+          meta: { title: "关于", url: "/about" }
         }
       ]
     }

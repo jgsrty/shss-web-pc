@@ -2,8 +2,8 @@
   <div class="header flex-justify-between">
     <div class="logo">logo</div>
     <div class="navs">
-      <span>首页</span>
-      <span>page2</span>
+      <span @click="$router.push('/')">首页</span>
+      <span @click="$router.push('/about')">page2</span>
       <span>page3</span>
       <span>page4</span>
     </div>
