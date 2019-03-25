@@ -45,7 +45,7 @@ body,
 }
 #nprogress {
   .bar {
-    // background: red !important;
+    background: #00c1de !important;
   }
   .spinner {
     display: none !important;
