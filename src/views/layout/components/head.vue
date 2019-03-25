@@ -24,7 +24,7 @@
           prop="password"
           :rules="[{ required: true, message: '请输入密码', trigger: 'blur' }]"
         >
-          <el-input v-model="loginForm.password" placeholder="请输入密码"></el-input>
+          <el-input type="password" v-model="loginForm.password" placeholder="请输入密码"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button class="full-button" type="primary" @click="submitLoginForm('loginForm')">登录</el-button>
@@ -46,10 +46,10 @@
           <el-input v-model="registerForm.username" placeholder="请输入用户名"></el-input>
         </el-form-item>
         <el-form-item prop="password">
-          <el-input v-model="registerForm.password" placeholder="请输入密码"></el-input>
+          <el-input type="password" v-model="registerForm.password" placeholder="请输入密码"></el-input>
         </el-form-item>
         <el-form-item prop="chekpass">
-          <el-input v-model="registerForm.chekpass" placeholder="请再次输入密码"></el-input>
+          <el-input type="password" v-model="registerForm.chekpass" placeholder="请再次输入密码"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button
