@@ -49,10 +49,11 @@ export default {
   height: 50px;
   z-index: 10;
   align-items: center;
-  padding: 0 20px;
+  padding: 0 12px 0 20px;
   position: fixed;
   left: 0;
-  right: 0;
+  right: 8px;
+  background: #fff;
   .navs {
     span {
       margin-right: 20px;
