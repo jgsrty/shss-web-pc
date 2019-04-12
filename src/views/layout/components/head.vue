@@ -15,7 +15,7 @@
       </div>
     </div>
     <!-- login form -->
-    <el-dialog :title="loginOrRegister?'登录':'注册'" :visible.sync="showDialog" width="320px">
+    <el-dialog :title="loginOrRegister?'登录':'注册'" :visible.sync="loginFormFlag" width="320px">
       <!-- 登录 -->
       <el-form :model="loginForm" ref="loginForm" class="login-form" v-show="loginOrRegister">
         <el-form-item
@@ -73,9 +73,20 @@
 
 <script>
 import userApi from "@/api/userApi";
+// import { mapGetters } from "vuex";
 export default {
   components: {
     // loginForm
+  },
+  computed: {
+    loginFormFlag: {
+      get() {
+        return this.$store.getters.loginFormFlag;
+      },
+      set(val) {
+        this.$store.commit("SWITCH_LOGIN_FORM_FLAG", val);
+      }
+    }
   },
   data() {
     let validateName = (rule, val, cb) => {
@@ -131,14 +142,19 @@ export default {
     async submitLoginForm(ref) {
       this.$refs[ref].validate(async res => {
         if (res) {
-          // this.showDialog = false;
-          // this.$message({
-          //   showClose: true,
-          //   message: "快写接口~~",
-          //   type: "success"
-          // });
-          let uToken = await userApi.login(this.loginForm)
-          console.log(uToken)
+          let uToken = await userApi.login(this.loginForm);
+          if (uToken) {
+            this.$store.commit("SWITCH_LOGIN_FORM_FLAG", false);
+            this.$message({
+              showClose: true,
+              message: "登录成功",
+              type: "success"
+            });
+            this.$store.dispatch("setToken", uToken.data.shssToken);
+            if (this.$route.query.redirect) {
+              this.$router.push({ path: this.$route.query.redirect });
+            }
+          }
         }
       });
     },
@@ -146,7 +162,7 @@ export default {
     submitRegisterForm(ref) {
       this.$refs[ref].validate(res => {
         if (res) {
-          this.showDialog = false;
+          this.$store.commit("SWITCH_LOGIN_FORM_FLAG", false);
           this.$message({
             showClose: true,
             message: "快写接口~~",
@@ -156,7 +172,7 @@ export default {
       });
     },
     userLogin() {
-      this.showDialog = true;
+      this.$store.commit("SWITCH_LOGIN_FORM_FLAG", true);
       // this.$refs[loginForm].resetFields();
       // this.$refs[registerForm].resetFields();
     }

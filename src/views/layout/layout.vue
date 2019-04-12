@@ -19,7 +19,7 @@ export default {
   },
   watch: {
     $route(to, from) {
-      console.log(this.$refs.scrollBar);
+      // console.log(this.$refs.scrollBar);
       this.$refs["scrollBar"].wrap.scrollTop = 0;
     }
   }

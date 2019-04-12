@@ -25,7 +25,9 @@ export default new Router({
         {
           path: "home",
           component: r =>
-            require.ensure([], () => r(require("@/views/Home/index.vue"), "Home")),
+            require.ensure([], () =>
+              r(require("@/views/Home/index.vue"), "Home")
+            ),
           meta: { title: "首页", url: "/home" }
         }
       ]
@@ -41,8 +43,10 @@ export default new Router({
         {
           path: "index",
           component: r =>
-            require.ensure([], () => r(require("@/views/About/index.vue"), "About")),
-          meta: { title: "关于", url: "/about" }
+            require.ensure([], () =>
+              r(require("@/views/About/index.vue"), "About")
+            ),
+          meta: { title: "关于", url: "/about", needLogin: true }
         }
       ]
     }
