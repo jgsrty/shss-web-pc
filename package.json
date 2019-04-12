@@ -16,9 +16,10 @@
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.5.0",
-    "@vue/cli-service": "^3.5.0",
+    "@vue/cli-service": "^3.5.3",
     "node-sass": "^4.9.0",
     "normalize.css": "^8.0.1",
+    "qs": "^6.7.0",
     "sass-loader": "^7.1.0",
     "vue-template-compiler": "^2.5.21"
   }

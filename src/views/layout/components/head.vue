@@ -1,14 +1,18 @@
 <template>
   <div class="head-contain">
     <div class="header flex-justify-between">
-      <div class="logo">logo</div>
+      <div class="logo">test</div>
       <div class="navs">
-        <span @click="$router.push('/')">首页</span>
-        <span @click="$router.push('/about')">page2</span>
-        <span>page3</span>
-        <span>page4</span>
+        <span @click="$router.push('/')">aaa</span>
+        <span @click="$router.push('/about')">bbb</span>
       </div>
-      <div class="user" @click="userLogin">登录</div>
+      <div class="user" @click="userLogin" v-if="!loginState">登录</div>
+      <div class="user flex-align-center" v-if="loginState">
+        <div class="user-icon">
+          <img src="http://api.laoyaojing.net/public/uploads/2019-03-07/5c810602a8e03.jpg" alt>
+        </div>
+        <div class="user-name">rty</div>
+      </div>
     </div>
     <!-- login form -->
     <el-dialog :title="loginOrRegister?'登录':'注册'" :visible.sync="showDialog" width="320px">
@@ -68,7 +72,7 @@
 </template>
 
 <script>
-// import loginForm from "@/components/dialog";
+import userApi from "@/api/userApi";
 export default {
   components: {
     // loginForm
@@ -104,8 +108,8 @@ export default {
       loginOrRegister: true,
       //登录
       loginForm: {
-        username: "",
-        password: ""
+        username: "tyl",
+        password: "tyl123"
       },
       //注册
       registerForm: {
@@ -117,20 +121,24 @@ export default {
         username: [{ validator: validateName, trigger: "blur" }],
         password: [{ validator: validatePass, trigger: "blur" }],
         chekpass: [{ validator: checkPass, trigger: "blur" }]
-      }
+      },
+      //登录状态
+      loginState: false
     };
   },
   methods: {
     // 登录
-    submitLoginForm(ref) {
-      this.$refs[ref].validate(res => {
+    async submitLoginForm(ref) {
+      this.$refs[ref].validate(async res => {
         if (res) {
-          this.showDialog = false;
-          this.$message({
-            showClose: true,
-            message: "快写接口~~",
-            type: "success"
-          });
+          // this.showDialog = false;
+          // this.$message({
+          //   showClose: true,
+          //   message: "快写接口~~",
+          //   type: "success"
+          // });
+          let uToken = await userApi.login(this.loginForm)
+          console.log(uToken)
         }
       });
     },
@@ -170,6 +178,21 @@ export default {
     .navs {
       span {
         margin-right: 20px;
+      }
+    }
+    .user {
+      cursor: pointer;
+      &-icon {
+        width: 40px;
+        height: 40px;
+        margin-right: 10px;
+        img {
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+        }
+      }
+      &-name {
       }
     }
   }

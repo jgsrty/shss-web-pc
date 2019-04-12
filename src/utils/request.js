@@ -1,5 +1,6 @@
 import axios from "axios";
 import store from "../store";
+import qs from "qs";
 
 // 创建axios实例
 const service = axios.create({
@@ -14,7 +15,7 @@ service.interceptors.request.use(
       config.headers["X-Token"] = store.getters.token;
     }
     if (config.method === "post") {
-      config.data = config.params;
+      config.data = qs.stringify(config.params);
       config.params = "";
     }
     return config;
