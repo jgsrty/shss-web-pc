@@ -1,6 +1,7 @@
 import axios from "axios";
 import store from "../store";
 import qs from "qs";
+import { Notification } from "element-ui";
 
 // 创建axios实例
 const service = axios.create({
@@ -30,12 +31,17 @@ service.interceptors.request.use(
 // response 拦截器
 service.interceptors.response.use(
   response => {
-    let { data, stateCode, result, message } = response.data;
+    let { data, stateCode, result, errMsg } = response.data;
     if (stateCode != 200) {
-      // if(status===500) 处理token过期等
+      // 501 登录失败，密码错误
+      console.log(123);
+      Notification.error({
+        title: "错误",
+        message: errMsg
+      });
       return Promise.resolve(false);
     } else {
-      return { data, result, message };
+      return { data, result };
     }
   },
   error => {
