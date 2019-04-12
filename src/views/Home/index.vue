@@ -2,10 +2,10 @@
   <div class="home">
     <!-- banner -->
     <div class="banner flex-center-center">
-      <!-- <div>banner</div> -->
+      <div>banner</div>
     </div>
     <!-- list -->
-    <!-- <div class="list">
+    <div class="list">
       <div class="tabs">
         <span>tab1</span>
         <span>tab2</span>
@@ -23,7 +23,7 @@
           </div>
         </div>
       </div>
-    </div> -->
+    </div>
   </div>
 </template>
 

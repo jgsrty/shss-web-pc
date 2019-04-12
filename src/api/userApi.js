@@ -13,12 +13,12 @@ const userApi = {
     });
   },
   //用户信息
-  getInfo({ token }) {
+  getInfo({ shssToken }) {
     return request({
-      url: "/userInfo",
+      url: "/user/findUserInfo",
       method: "post",
       params: {
-        token
+        shssToken
       }
     });
   },
