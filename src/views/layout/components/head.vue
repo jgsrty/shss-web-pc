@@ -38,7 +38,7 @@
         </div>
         <div class="lang menu-item" @click="switchLang">
           <i class="el-icon-sort"></i>
-          {{this.$i18n.locale=='cn'?'切换英文':'切换中文'}}
+          {{this.$i18n.locale=='cn'?'Switch English':'切换中文'}}
         </div>
       </div>
     </div>

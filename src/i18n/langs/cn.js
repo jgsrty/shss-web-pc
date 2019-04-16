@@ -21,6 +21,9 @@ const cn = {
       passNotMatch: "两次输入密码不一致"
     }
   },
+  code: {
+    error: "错误"
+  },
   ...enLocale
 };
 export default cn;

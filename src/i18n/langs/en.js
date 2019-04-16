@@ -21,6 +21,9 @@ const en = {
       passNotMatch: "The two passwords do not match"
     }
   },
+  code: {
+    error: "error"
+  },
   ...enLocale
 };
 export default en;
