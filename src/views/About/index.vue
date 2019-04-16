@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-for="(item,ind) in 100" :key="ind">about</div>
+    <div v-for="(item,ind) in 100" :key="ind">{{$t('header.router.about')}}</div>
   </div>
 </template>
 

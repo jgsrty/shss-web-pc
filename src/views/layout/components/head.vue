@@ -1,52 +1,71 @@
 <template>
   <div class="head-contain">
     <div class="header flex-justify-between">
-      <div class="logo">test</div>
+      <div class="logo">{{$t('header.logo')}}</div>
       <div class="navs">
-        <span @click="$router.push('/')">无需登录</span>
-        <span @click="$router.push('/about')">需要登录</span>
+        <span @click="$router.push('/')">{{$t('header.router.index')}}</span>
+        <span @click="$router.push('/about')">{{$t('header.router.about')}}</span>
       </div>
-      <div class="user" @click="userLogin" v-if="!$store.getters.userState">登录</div>
-      <div class="user flex-align-center" v-else>
-        <el-dropdown trigger="click" @command="clickUserHead">
-          <div class="flex-align-center">
-            <div class="user-icon">
-              <img
-                v-if="$store.getters.userInfo.portrait"
-                :src="$store.getters.userInfo.portrait"
-                alt
-              >
-              <img
-                v-else
-                src="http://api.laoyaojing.net/public/uploads/2019-03-07/5c810602a8e03.jpg"
-                alt
-              >
+      <div class="menu">
+        <div
+          class="user menu-item"
+          @click="userLogin"
+          v-if="!$store.getters.userState"
+        >{{$t('user.login')}}</div>
+        <div class="user menu-item flex-align-center" v-else>
+          <el-dropdown trigger="click" @command="clickUserHead">
+            <div class="flex-align-center">
+              <div class="user-icon">
+                <img
+                  v-if="$store.getters.userInfo.portrait"
+                  :src="$store.getters.userInfo.portrait"
+                  alt
+                >
+                <img
+                  v-else
+                  src="http://api.laoyaojing.net/public/uploads/2019-03-07/5c810602a8e03.jpg"
+                  alt
+                >
+              </div>
+              <div class="user-name">{{$store.getters.userInfo.username}}</div>
             </div>
-            <div class="user-name">{{$store.getters.userInfo.username}}</div>
-          </div>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="logout">退出登录</el-dropdown-item>
-            <el-dropdown-item>我是谁</el-dropdown-item>
-            <el-dropdown-item>我在哪里</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item command="logout">{{$t('user.logOut')}}</el-dropdown-item>
+              <!-- <el-dropdown-item>我是谁</el-dropdown-item>
+              <el-dropdown-item>我在哪里</el-dropdown-item>-->
+            </el-dropdown-menu>
+          </el-dropdown>
+        </div>
+        <div class="lang menu-item" @click="switchLang">
+          <i class="el-icon-sort"></i>
+          {{this.$i18n.locale=='cn'?'切换英文':'切换中文'}}
+        </div>
       </div>
     </div>
     <!-- login form -->
-    <el-dialog :title="loginOrRegister?'登录':'注册'" :visible.sync="loginFormFlag" width="320px">
+    <el-dialog
+      :title="loginOrRegister?`${this.$t('user.login')}`:`${this.$t('user.register')}`"
+      :visible.sync="loginFormFlag"
+      :close-on-click-modal="false"
+      width="320px"
+    >
       <!-- 登录 -->
       <el-form :model="loginForm" ref="loginForm" class="login-form" v-show="loginOrRegister">
         <el-form-item
           prop="username"
-          :rules="[{ required: true, message: '请输入用户名', trigger: 'blur' }]"
+          :rules="[{ required: true, message: `${this.$t('user.place.userName')}`, trigger: 'blur' }]"
         >
-          <el-input v-model="loginForm.username" placeholder="请输入用户名"></el-input>
+          <el-input v-model="loginForm.username" :placeholder="$t('user.place.userName')"></el-input>
         </el-form-item>
         <el-form-item
           prop="password"
-          :rules="[{ required: true, message: '请输入密码', trigger: 'blur' }]"
+          :rules="[{ required: true, message: `${this.$t('user.place.passWord')}`, trigger: 'blur' }]"
         >
-          <el-input type="password" v-model="loginForm.password" placeholder="请输入密码"></el-input>
+          <el-input
+            type="password"
+            v-model="loginForm.password"
+            :placeholder="$t('user.place.passWord')"
+          ></el-input>
         </el-form-item>
         <el-form-item>
           <el-button
@@ -54,10 +73,10 @@
             class="full-button"
             type="primary"
             @click="submitLoginForm('loginForm')"
-          >登录</el-button>
+          >{{$t('user.login')}}</el-button>
           <span>
-            没有账号?
-            <el-button type="text" @click="loginOrRegister=false">注册</el-button>
+            {{$t('user.noCount')}}
+            <el-button type="text" @click="loginOrRegister=false">{{$t('user.register')}}</el-button>
           </span>
         </el-form-item>
       </el-form>
@@ -70,13 +89,21 @@
         v-show="!loginOrRegister"
       >
         <el-form-item prop="username">
-          <el-input v-model="registerForm.username" placeholder="请输入用户名"></el-input>
+          <el-input v-model="registerForm.username" :placeholder="$t('user.place.userName')"></el-input>
         </el-form-item>
         <el-form-item prop="password">
-          <el-input type="password" v-model="registerForm.password" placeholder="请输入密码"></el-input>
+          <el-input
+            type="password"
+            v-model="registerForm.password"
+            :placeholder="$t('user.place.passWord')"
+          ></el-input>
         </el-form-item>
         <el-form-item prop="chekpass">
-          <el-input type="password" v-model="registerForm.chekpass" placeholder="请再次输入密码"></el-input>
+          <el-input
+            type="password"
+            v-model="registerForm.chekpass"
+            :placeholder="$t('user.place.passWordAgain')"
+          ></el-input>
         </el-form-item>
         <el-form-item>
           <el-button
@@ -84,10 +111,10 @@
             type="primary"
             @click="submitRegisterForm('registerForm')"
             :loading="registLoading"
-          >注册</el-button>
+          >{{$t('user.register')}}</el-button>
           <span>
-            已有账号?
-            <el-button type="text" @click="loginOrRegister=true">登录</el-button>
+            {{$t('user.hasCount')}}
+            <el-button type="text" @click="loginOrRegister=true">{{$t('user.login')}}</el-button>
           </span>
         </el-form-item>
       </el-form>
@@ -116,13 +143,13 @@ export default {
   data() {
     let validateName = (rule, val, cb) => {
       if (val === "") {
-        return cb(new Error("请输入用户名"));
+        return cb(new Error(`${this.$t("user.place.userName")}`));
       }
       cb();
     };
     let validatePass = (rule, val, cb) => {
       if (val === "") {
-        return cb(new Error("请输入密码"));
+        return cb(new Error(`${this.$t("user.place.passWord")}`));
       } else {
         if (this.registerForm.chekpass !== "") {
           this.$refs.registerForm.validateField("chekpass");
@@ -132,9 +159,9 @@ export default {
     };
     let checkPass = (rule, val, cb) => {
       if (val === "") {
-        return cb(new Error("请再次输入密码"));
+        return cb(new Error(`${this.$t("user.place.passWordAgain")}`));
       } else if (val !== this.registerForm.password) {
-        cb(new Error("两次输入密码不一致"));
+        cb(new Error(`${this.$t("user.place.passNotMatch")}`));
       } else {
         cb();
       }
@@ -144,8 +171,10 @@ export default {
       loginOrRegister: true,
       //登录
       loginForm: {
-        username: "tyl",
-        password: "tyl123"
+        //tyl
+        username: "",
+        //tyl123
+        password: ""
       },
       //注册
       registerForm: {
@@ -167,12 +196,13 @@ export default {
       registLoading: false
     };
   },
+  mounted() {},
   methods: {
     // 登录
     async submitLoginForm(ref) {
-      this.loginLoading = true;
       this.$refs[ref].validate(async res => {
         if (res) {
+          this.loginLoading = true;
           let uToken = await userApi.login(this.loginForm);
           this.loginLoading = false;
           if (uToken) {
@@ -180,7 +210,7 @@ export default {
             this.$store.commit("SWITCH_LOGIN_FORM_FLAG", false);
             this.$message({
               showClose: true,
-              message: "登录成功",
+              message: `${this.$t("user.logSucc")}`,
               type: "success"
             });
             //保存token
@@ -221,6 +251,12 @@ export default {
       // this.$refs[loginForm].resetFields();
       // this.$refs[registerForm].resetFields();
     },
+    //切换语言
+    switchLang() {
+      this.$i18n.locale == "cn"
+        ? (this.$i18n.locale = "en")
+        : (this.$i18n.locale = "cn");
+    },
     clickUserHead(e) {
       if (e == "logout") {
         this.$store.dispatch("logOut").then(() => {
@@ -243,24 +279,36 @@ export default {
     left: 0;
     right: 8px;
     background: #fff;
+    .logo {
+      width: 300px;
+    }
     .navs {
       span {
-        margin-right: 20px;
+        margin: 0 10px;
       }
     }
-    .user {
-      cursor: pointer;
-      &-icon {
-        width: 30px;
-        height: 30px;
-        margin-right: 10px;
-        img {
-          width: 100%;
-          height: 100%;
-          border-radius: 50%;
-        }
+    .menu {
+      display: flex;
+      flex-direction: row-reverse;
+      align-items: center;
+      width: 300px;
+      &-item {
+        margin-left: 20px;
       }
-      &-name {
+      .user {
+        cursor: pointer;
+        &-icon {
+          width: 30px;
+          height: 30px;
+          margin-right: 10px;
+          img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+          }
+        }
+        &-name {
+        }
       }
     }
   }
