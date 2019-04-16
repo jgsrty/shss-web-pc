@@ -1,4 +1,4 @@
-import enLocale from "element-ui/lib/locale/lang/zh-CN";
+import cnLocale from "element-ui/lib/locale/lang/zh-CN";
 const cn = {
   header: {
     logo: "标志",
@@ -24,6 +24,6 @@ const cn = {
   code: {
     error: "错误"
   },
-  ...enLocale
+  ...cnLocale
 };
 export default cn;
