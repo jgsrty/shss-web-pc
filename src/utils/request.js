@@ -13,10 +13,9 @@ const service = axios.create({
 // request拦截器
 service.interceptors.request.use(
   config => {
-    // console.log(config)
-    // if (store.getters.shssToken) {
-    //   config.headers["X-Token"] = store.getters.shssToken;
-    // }
+    if (store.getters.shssToken) {
+      config.headers["shssToken"] = store.getters.shssToken;
+    }
     if (config.method === "post") {
       config.data = qs.stringify(config.params);
       config.params = "";
