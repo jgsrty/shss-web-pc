@@ -2,15 +2,38 @@
   <div class="home">
     <!-- banner -->
     <div class="banner flex-center-center">
-      <div>{{$t('header.router.index')}}</div>
+      <div>
+        <el-input v-model="transText" placeholder="请输入内容"></el-input>
+        <el-button type="primary" @click="submitTransText">翻译一下</el-button>
+      </div>
     </div>
     <!-- list -->
   </div>
 </template>
 
 <script>
+import homeIndexApi from "@/api/homeIndexApi";
 export default {
-  name: "home"
+  name: "home",
+  data() {
+    return {
+      transText: ""
+    };
+  },
+  methods: {
+    async submitTransText() {
+      let params = {
+        q: this.transText,
+        from: "auto",
+        to: "zh",
+        appid: 20190417000288752,
+        salt: Date.parse(new Date() / 1000),
+        key: "nZSNZpNrirkokFH4KCCq"
+      };
+      let res = homeIndexApi.baiduTranslate(params);
+      console.log(res);
+    }
+  }
 };
 </script>
 

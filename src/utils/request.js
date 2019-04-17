@@ -16,10 +16,12 @@ service.interceptors.request.use(
     if (store.getters.shssToken) {
       config.headers["shssToken"] = store.getters.shssToken;
     }
-    if (config.method === "post") {
+    // if (config.method === "post") {
+    if (config.type != "json") {
       config.data = qs.stringify(config.params);
       config.params = "";
     }
+    // }
     return config;
   },
   error => {
