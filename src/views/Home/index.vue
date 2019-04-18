@@ -4,7 +4,17 @@
     <div class="banner flex-center-center">
       <div>{{$t('header.router.index')}}</div>
     </div>
-    <baidu-map class="bm-view"></baidu-map>
+    <baidu-map class="bm-view" :center="mapArea" :scroll-wheel-zoom="true">
+      <!-- <bm-panorama></bm-panorama> -->
+      <bm-map-type
+        :map-types="['BMAP_NORMAL_MAP', 'BMAP_HYBRID_MAP']"
+        anchor="BMAP_ANCHOR_TOP_LEFT"
+      ></bm-map-type>
+      <bm-navigation anchor="BMAP_ANCHOR_TOP_RIGHT"></bm-navigation>
+      <bm-overview-map anchor="BMAP_ANCHOR_BOTTOM_RIGHT" :isOpen="true"></bm-overview-map>
+      <bm-traffic :predictDate="{weekday: 7, hour: 12}"></bm-traffic>
+      <bm-geolocation anchor="BMAP_ANCHOR_BOTTOM_LEFT" :showAddressBar="true" :autoLocation="true"></bm-geolocation>
+    </baidu-map>
     <!-- list -->
   </div>
 </template>
@@ -12,7 +22,12 @@
 <script>
 import homeIndexApi from "@/api/homeIndexApi";
 export default {
-  name: "home"
+  name: "home",
+  data() {
+    return {
+      mapArea: "登封"
+    };
+  }
 };
 </script>
 
@@ -22,8 +37,8 @@ export default {
     height: 300px;
   }
   .bm-view {
-    width: 300px;
-    height: 300px;
+    width: 100%;
+    height: 500px;
   }
   .list {
     .tabs {
