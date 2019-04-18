@@ -4,6 +4,7 @@
     <div class="banner flex-center-center">
       <div>{{$t('header.router.index')}}</div>
     </div>
+    <baidu-map class="bm-view"></baidu-map>
     <!-- list -->
   </div>
 </template>
@@ -18,6 +19,10 @@ export default {
 <style scoped lang="scss">
 .home {
   .banner {
+    height: 300px;
+  }
+  .bm-view {
+    width: 300px;
     height: 300px;
   }
   .list {

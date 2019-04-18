@@ -16,6 +16,11 @@ import "element-ui/lib/theme-chalk/index.css";
 import "@/style/theme.scss";
 // i18n
 import i18n from "./i18n/i18n";
+// 百度地图
+import BaiduMap from 'vue-baidu-map'
+Vue.use(BaiduMap, {
+  ak: 'vrfEM6K2Dm4DYLMpg1gVzGo0iGLaRuFG'
+})
 
 Vue.config.productionTip = false;
 
