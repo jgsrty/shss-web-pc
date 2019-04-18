@@ -55,7 +55,11 @@
           prop="username"
           :rules="[{ required: true, message: `${this.$t('user.place.userName')}`, trigger: 'blur' }]"
         >
-          <el-input v-model="loginForm.username" :placeholder="$t('user.place.userName')"></el-input>
+          <el-input
+            @keyup.enter.native="submitLoginForm('loginForm')"
+            v-model="loginForm.username"
+            :placeholder="$t('user.place.userName')"
+          ></el-input>
         </el-form-item>
         <el-form-item
           prop="password"
@@ -64,6 +68,7 @@
           <el-input
             type="password"
             v-model="loginForm.password"
+            @keyup.enter.native="submitLoginForm('loginForm')"
             :placeholder="$t('user.place.passWord')"
           ></el-input>
         </el-form-item>
@@ -89,10 +94,15 @@
         v-show="!loginOrRegister"
       >
         <el-form-item prop="username">
-          <el-input v-model="registerForm.username" :placeholder="$t('user.place.userName')"></el-input>
+          <el-input
+            @keyup.enter.native="submitRegisterForm('registerForm')"
+            v-model="registerForm.username"
+            :placeholder="$t('user.place.userName')"
+          ></el-input>
         </el-form-item>
         <el-form-item prop="password">
           <el-input
+            @keyup.enter.native="submitRegisterForm('registerForm')"
             type="password"
             v-model="registerForm.password"
             :placeholder="$t('user.place.passWord')"
@@ -100,6 +110,7 @@
         </el-form-item>
         <el-form-item prop="chekpass">
           <el-input
+            @keyup.enter.native="submitRegisterForm('registerForm')"
             type="password"
             v-model="registerForm.chekpass"
             :placeholder="$t('user.place.passWordAgain')"
@@ -225,7 +236,7 @@ export default {
             // });
             //更新vuex用户信息
             // if (getUserInfo) {
-            this.$store.dispatch("setUserInfo", uToken.data.shssToken);
+            this.$store.dispatch("setUserInfo");
             // this.loginState = true;
             // this.userInfo = this.$store.getters.userInfo;
             // }

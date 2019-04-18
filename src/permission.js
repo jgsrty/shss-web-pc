@@ -17,7 +17,7 @@ router.beforeEach((to, from, next) => {
       // } else {
       //检测用户信息
       if (!store.getters.userInfo) {
-        store.dispatch("setUserInfo", store.getters.shssToken);
+        store.dispatch("setUserInfo");
       }
       next();
       // }
@@ -30,7 +30,7 @@ router.beforeEach((to, from, next) => {
     //无需登录页面检查token，如有token，获取用户信息
     if (store.getters.shssToken) {
       if (!store.getters.userInfo) {
-        store.dispatch("setUserInfo", store.getters.shssToken);
+        store.dispatch("setUserInfo");
       }
       next();
     }

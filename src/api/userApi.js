@@ -20,13 +20,10 @@ const userApi = {
    * 用户信息
    * @param {string} token token放在header中无需通过参数传递
    */
-  getInfo({ shssToken }) {
+  getInfo() {
     return request({
       url: "/user/findUserInfo",
-      method: "post",
-      params: {
-        shssToken
-      }
+      method: "post"
     });
   },
   /**

@@ -31,7 +31,7 @@ const user = {
     setUserInfo({ commit }, token) {
       return new Promise((resolve, reject) => {
         userApi
-          .getInfo({ shssToken: token })
+          .getInfo()
           .then(res => {
             commit("SET_USER_STATE", true);
             commit("SET_USER_INFO", res.data);
