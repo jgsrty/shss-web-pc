@@ -213,49 +213,54 @@ export default {
     async submitLoginForm(ref) {
       this.$refs[ref].validate(async res => {
         if (res) {
-          this.loginLoading = true;
-          let uToken = await userApi.login(this.loginForm);
-          this.loginLoading = false;
-          if (uToken) {
-            this.loginLoading = false;
-            this.$store.commit("SWITCH_LOGIN_FORM_FLAG", false);
-            this.$message({
-              showClose: true,
-              message: `${this.$t("user.logSucc")}`,
-              type: "success"
-            });
-            //保存token
-            this.$store.dispatch("setToken", uToken.data.shssToken);
-            //登录重定向
-            if (this.$route.query.redirect) {
-              this.$router.push({ path: this.$route.query.redirect });
-            }
-            //拉取用户信息
-            // let getUserInfo = await userApi.getInfo({
-            //   shssToken: uToken.data.shssToken
-            // });
-            //更新vuex用户信息
-            // if (getUserInfo) {
-            this.$store.dispatch("setUserInfo");
-            // this.loginState = true;
-            // this.userInfo = this.$store.getters.userInfo;
-            // }
-          }
+          this.loginFunction(this.loginForm);
         }
       });
     },
     // 注册
-    submitRegisterForm(ref) {
-      this.$refs[ref].validate(res => {
+    async submitRegisterForm(ref) {
+      this.$refs[ref].validate(async res => {
         if (res) {
-          this.$store.commit("SWITCH_LOGIN_FORM_FLAG", false);
-          this.$message({
-            showClose: true,
-            message: "快写接口~~",
-            type: "success"
-          });
+          this.registLoading = true;
+          let res = await userApi.register(this.registerForm);
+          this.registLoading = false;
+          if (res) {
+            this.$store.commit("SWITCH_LOGIN_FORM_FLAG", false);
+            this.loginFunction(this.registerForm);
+          }
         }
       });
+    },
+    //  登录function
+    async loginFunction(form) {
+      this.loginLoading = true;
+      let uToken = await userApi.login(form);
+      this.loginLoading = false;
+      if (uToken) {
+        this.loginLoading = false;
+        this.$store.commit("SWITCH_LOGIN_FORM_FLAG", false);
+        this.$message({
+          showClose: true,
+          message: `${this.$t("user.logSucc")}`,
+          type: "success"
+        });
+        //保存token
+        this.$store.dispatch("setToken", uToken.data.shssToken);
+        //登录重定向
+        if (this.$route.query.redirect) {
+          this.$router.push({ path: this.$route.query.redirect });
+        }
+        //拉取用户信息
+        // let getUserInfo = await userApi.getInfo({
+        //   shssToken: uToken.data.shssToken
+        // });
+        //更新vuex用户信息
+        // if (getUserInfo) {
+        this.$store.dispatch("setUserInfo");
+        // this.loginState = true;
+        // this.userInfo = this.$store.getters.userInfo;
+        // }
+      }
     },
     userLogin() {
       this.$store.commit("SWITCH_LOGIN_FORM_FLAG", true);

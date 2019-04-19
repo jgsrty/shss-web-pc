@@ -15,7 +15,7 @@
       <!-- 缩略图 -->
       <bm-overview-map anchor="BMAP_ANCHOR_BOTTOM_RIGHT" :isOpen="true"></bm-overview-map>
       <!-- 交通流量 -->
-      <bm-traffic :predictDate="{weekday: 7, hour: 12}"></bm-traffic>
+      <!-- <bm-traffic :predictDate="{weekday: 7, hour: 12}"></bm-traffic> -->
       <!-- 定位 -->
       <bm-geolocation anchor="BMAP_ANCHOR_BOTTOM_LEFT" :showAddressBar="true" :autoLocation="true"></bm-geolocation>
     </baidu-map>

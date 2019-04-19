@@ -16,6 +16,16 @@ const userApi = {
       }
     });
   },
+  register({ username, password }){
+    return request({
+      url: "user/registerUser",
+      method: "post",
+      params: {
+        username,
+        password
+      }
+    });
+  },
   /**
    * 用户信息
    * @param {string} token token放在header中无需通过参数传递
