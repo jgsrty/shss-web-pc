@@ -32,7 +32,7 @@ const userApi = {
    */
   getInfo() {
     return request({
-      url: "/user/findUserInfo",
+      url: "user/findUserInfo",
       method: "post"
     });
   },
@@ -42,7 +42,7 @@ const userApi = {
    */
   logOut({ token }) {
     return request({
-      url: "/userLogout",
+      url: "user/logoutUser",
       method: "post",
       params: {
         token

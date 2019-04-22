@@ -141,8 +141,8 @@ export default {
     // loginForm
   },
   computed: {
+    ...mapGetters(["shssToken", "userState"]),
     loginFormFlag: {
-      ...mapGetters(["shssToken", "userInfo", "userState"]),
       get() {
         return this.$store.getters.loginFormFlag;
       },
@@ -273,11 +273,15 @@ export default {
         ? (this.$i18n.locale = "en")
         : (this.$i18n.locale = "cn");
     },
-    clickUserHead(e) {
+    async clickUserHead(e) {
+      // 登出
       if (e == "logout") {
-        this.$store.dispatch("logOut").then(() => {
-          window.location.reload();
-        });
+        console.log(this.shssToken);
+        // let res = await userApi.logOut(this.shssToken);
+        // console.log(res)
+        // this.$store.dispatch("logOut").then(() => {
+        //   window.location.reload();
+        // });
       }
     }
   }
