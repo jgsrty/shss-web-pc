@@ -276,12 +276,12 @@ export default {
     async clickUserHead(e) {
       // 登出
       if (e == "logout") {
-        console.log(this.shssToken);
-        // let res = await userApi.logOut(this.shssToken);
-        // console.log(res)
-        // this.$store.dispatch("logOut").then(() => {
-        //   window.location.reload();
-        // });
+        let res = await userApi.logOut(this.shssToken);
+        if (res) {
+          this.$store.dispatch("logOut").then(() => {
+            window.location.reload();
+          });
+        }
       }
     }
   }
