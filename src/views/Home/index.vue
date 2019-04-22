@@ -25,6 +25,11 @@
 
 <script>
 import homeIndexApi from "@/api/homeIndexApi";
+let jisuData = {
+  train: {
+    station2s: "https://api.jisuapi.com/train/station2s"
+  }
+};
 export default {
   name: "home",
   data() {
