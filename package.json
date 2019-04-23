@@ -9,6 +9,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "element-ui": "^2.6.3",
+    "js-md5": "^0.7.3",
     "nprogress": "^0.2.0",
     "vue": "^2.6.6",
     "vue-baidu-map": "^0.21.19",

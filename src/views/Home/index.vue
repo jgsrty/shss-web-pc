@@ -2,7 +2,8 @@
   <div class="home">
     <!-- banner -->
     <div class="banner flex-center-center">
-      <div>{{$t('header.router.index')}}</div>
+      <el-input v-model="baiduTrans.q" placeholder="请输入内容" size="mini"></el-input>
+      <el-button type="primary" round size="mini" @click="transText">trans</el-button>
     </div>
     <baidu-map class="bm-view" :center="mapArea" :scroll-wheel-zoom="true">
       <!-- 地图类型 -->
@@ -25,17 +26,50 @@
 
 <script>
 import homeIndexApi from "@/api/homeIndexApi";
-let jisuData = {
-  train: {
-    station2s: "https://api.jisuapi.com/train/station2s"
-  }
-};
+import publicApi from "@/api/publicApi";
+import md5 from "js-md5";
 export default {
   name: "home",
   data() {
     return {
-      mapArea: "登封"
+      mapArea: "登封",
+      //百度翻译参数
+      baiduTrans: {
+        url: publicApi.baiduTrans.https, //请求url
+        method: "POST", //请求方法
+        q: "", //翻译文本
+        from: "auto", //翻译源语言 默认auto
+        to: "zh", //译文语言
+        appid: publicApi.baiduTrans.appid, //appid
+        salt: Date.parse(new Date()), //随机数
+        sign: "" //签名=md5(appid+q+salt+密钥)
+      }
     };
+  },
+  mounted() {
+    console.log(publicApi);
+  },
+  methods: {
+    async transText() {
+      if (this.baiduTrans.q) {
+        this.baiduTrans.sign = md5(
+          this.baiduTrans.appid +
+            this.baiduTrans.q +
+            this.baiduTrans.salt +
+            publicApi.baiduTrans.appsecret
+        );
+        let res = await homeIndexApi.doPostForResult(this.baiduTrans);
+        if (res) {
+          alert(`翻译结果：${res.trans_result[0].dst}`);
+        }
+      } else {
+        this.$message({
+          showClose: true,
+          message: "请输入需要翻译的文本",
+          type: "warning"
+        });
+      }
+    }
   }
 };
 </script>

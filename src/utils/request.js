@@ -34,25 +34,45 @@ service.interceptors.request.use(
 // response 拦截器
 service.interceptors.response.use(
   response => {
-    let { data, stateCode, result, errMsg } = response.data;
-    if (stateCode != 200) {
-      // 501 登录失败，密码错误
-      // 501 请求参数错误或登录信息已过期
-      // 503 登录过期，请重新登录
-      Notification.error({
-        title: "错误",
-        message: errMsg,
-        offset: 30
-      });
-      if (stateCode == 503) {
-        setTimeout(() => {
-          Storage.del("shssToken");
-          window.location.reload();
-        }, 1500);
+    console.log(response);
+    let {
+      data,
+      stateCode,
+      result,
+      errMsg,
+      to,
+      from,
+      trans_result
+    } = response.data;
+    if (response.data.stateCode) {
+      //非外部接口
+      if (stateCode != 200) {
+        // 501 登录失败，密码错误
+        // 501 请求参数错误或登录信息已过期
+        // 503 登录过期，请重新登录
+        Notification.error({
+          title: "错误",
+          message: errMsg,
+          offset: 30
+        });
+        if (stateCode == 503) {
+          setTimeout(() => {
+            Storage.del("shssToken");
+            window.location.reload();
+          }, 1500);
+        }
+        return Promise.resolve(false);
       }
-      return Promise.resolve(false);
     } else {
-      return { data, result, errMsg };
+      return {
+        data,
+        stateCode,
+        result,
+        errMsg,
+        to,
+        from,
+        trans_result
+      };
     }
   },
   error => {
