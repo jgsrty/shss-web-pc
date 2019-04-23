@@ -27,13 +27,12 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import { setTimeout } from "timers";
+// import { mapGetters } from "vuex";
 import Storage from "@/utils/storage";
 let socket;
 export default {
   computed: {
-    ...mapGetters(["userInfo", "shssToken", "userState"])
+    // ...mapGetters(["userInfo", "shssToken", "userState"])
   },
   data() {
     return {
@@ -85,7 +84,7 @@ export default {
         };
         this.webSocket.send(JSON.stringify(params));
         this.chatContent = "";
-      }else{
+      } else {
         this.$message({
           showClose: true,
           message: "请输入聊天内容",
@@ -126,7 +125,7 @@ export default {
       padding: 5px;
       .chat-records {
         height: 380px;
-        overflow:scroll;
+        overflow: scroll;
         .chat-msg {
           font-size: 14px;
           margin-bottom: 10px;
