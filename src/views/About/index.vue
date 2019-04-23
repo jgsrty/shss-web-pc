@@ -18,6 +18,7 @@
           <div class="chat-input">
             <input type="text" v-model="chatContent">
             <el-button type="text" @click="submitChat">发送</el-button>
+            <el-button type="text" @click="closeChat">断开连接</el-button>
           </div>
         </div>
       </div>
@@ -70,10 +71,12 @@ export default {
       console.log("close");
     },
     submitChat() {
-      this.webSocket.send(
-        '[{"toUserId":"' + 2 + '","contentText":"' + this.chatContent + '"}]'
-      );
+      console.log(this.webSocket)
+      this.webSocket.send('fdsa');
       this.chatContent = "";
+    },
+    closeChat() {
+      this.webSocket.close()
     }
   }
 };
