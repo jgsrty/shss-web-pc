@@ -34,7 +34,6 @@ service.interceptors.request.use(
 // response 拦截器
 service.interceptors.response.use(
   response => {
-    console.log(response);
     let {
       data,
       stateCode,
@@ -45,7 +44,7 @@ service.interceptors.response.use(
       trans_result
     } = response.data;
     if (response.data.stateCode) {
-      //非外部接口
+      //内部接口
       if (stateCode != 200) {
         // 501 登录失败，密码错误
         // 501 请求参数错误或登录信息已过期
@@ -62,13 +61,17 @@ service.interceptors.response.use(
           }, 1500);
         }
         return Promise.resolve(false);
+      } else {
+        return {
+          data,
+          stateCode,
+          result,
+          errMsg
+        };
       }
     } else {
+      //外部接口
       return {
-        data,
-        stateCode,
-        result,
-        errMsg,
         to,
         from,
         trans_result

@@ -2,7 +2,7 @@
   <div class="home">
     <!-- banner -->
     <div class="banner flex-center-center">
-      <el-input v-model="baiduTrans.q" placeholder="请输入内容" size="mini"></el-input>
+      <el-input v-model="baiduTrans.q" placeholder="请输入内容" size="mini" ></el-input>
       <el-button type="primary" round size="mini" @click="transText">trans</el-button>
     </div>
     <baidu-map class="bm-view" :center="mapArea" :scroll-wheel-zoom="true">
