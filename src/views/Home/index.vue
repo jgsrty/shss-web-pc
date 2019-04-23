@@ -2,7 +2,9 @@
   <div class="home">
     <!-- banner -->
     <div class="banner flex-center-center">
-      <el-input v-model="baiduTrans.q" placeholder="请输入内容" size="mini" ></el-input>
+      <div class="trans-input">
+        <el-input v-model="baiduTrans.q" placeholder="请输入内容" size="mini"></el-input>
+      </div>
       <el-button type="primary" round size="mini" @click="transText">trans</el-button>
     </div>
     <baidu-map class="bm-view" :center="mapArea" :scroll-wheel-zoom="true">
@@ -46,9 +48,6 @@ export default {
       }
     };
   },
-  mounted() {
-    console.log(publicApi);
-  },
   methods: {
     async transText() {
       if (this.baiduTrans.q) {
@@ -78,6 +77,10 @@ export default {
 .home {
   .banner {
     height: 300px;
+    .trans-input {
+      width: 300px;
+      margin-right: 10px;
+    }
   }
   .bm-view {
     width: 100%;

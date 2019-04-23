@@ -8,9 +8,9 @@
         <div class="chat-view flex-direction-column">
           <div class="chat-records">
             <div class="chat-msg" v-for="(item,ind) in chatList" :key="ind">
-              <div class="msg-box">
-                <div class="msg">消息来自id:{{item.fromUserId}}</div>
-                <div class="msg">消息内容:{{item.contentText}}</div>
+              <div class="msg-box" v-if="item.userId">
+                <div class="msg">消息来自id:{{item.userId}}</div>
+                <div class="msg">消息内容:{{item.message}}</div>
               </div>
             </div>
           </div>
@@ -28,6 +28,8 @@
 
 <script>
 import { mapGetters } from "vuex";
+import { setTimeout } from "timers";
+import Storage from "@/utils/storage";
 let socket;
 export default {
   computed: {
@@ -35,15 +37,17 @@ export default {
   },
   data() {
     return {
+      userId: "",
       webSocket: null,
       chatContent: "",
       chatList: []
     };
   },
   mounted() {
-    this.webSocket = new WebSocket(
-      "ws://47.98.183.208:8080/webSocket/" + this.$route.query.id
-    );
+    // this.userId = this.$store.getters.userInfo.userId;
+    this.userId = Storage.get("userId");
+    let socketUrl = "ws://47.98.183.208:8080/webSocket/" + this.userId;
+    this.webSocket = new WebSocket(socketUrl);
     this.initWebsocket();
   },
   methods: {
@@ -59,9 +63,12 @@ export default {
     onMsg(e) {
       console.log("onmessage");
       let result = JSON.parse(e.data);
-      if (typeof result.data != "string") {
+      console.log(result);
+      //非消息数据排除
+      if (result.stateCode != 200) {
         // console.log(result.data)
-        this.chatList.push(result.data);
+        this.chatList.push(result);
+        console.log(this.chatList);
       }
     },
     onError() {
@@ -71,12 +78,23 @@ export default {
       console.log("close");
     },
     submitChat() {
-      console.log(this.webSocket)
-      this.webSocket.send('fdsa');
-      this.chatContent = "";
+      if (this.chatContent) {
+        let params = {
+          toUserId: "",
+          contentText: this.chatContent
+        };
+        this.webSocket.send(JSON.stringify(params));
+        this.chatContent = "";
+      }else{
+        this.$message({
+          showClose: true,
+          message: "请输入聊天内容",
+          type: "warning"
+        });
+      }
     },
     closeChat() {
-      this.webSocket.close()
+      this.webSocket.close();
     }
   }
 };
@@ -108,6 +126,7 @@ export default {
       padding: 5px;
       .chat-records {
         height: 380px;
+        overflow:scroll;
         .chat-msg {
           font-size: 14px;
           margin-bottom: 10px;

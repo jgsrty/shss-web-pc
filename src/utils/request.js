@@ -80,6 +80,11 @@ service.interceptors.response.use(
   },
   error => {
     console.log("err" + error); // for debug
+    Notification.error({
+      title: "错误",
+      message: error,
+      offset: 30
+    });
     return Promise.reject(error);
   }
 );

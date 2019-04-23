@@ -4,7 +4,7 @@ const user = {
   state: {
     shssToken: Storage.get("shssToken") || null,
     loginFormFlag: false,
-    userInfo: null,
+    userInfo: '',
     userState: false
   },
 
@@ -35,6 +35,7 @@ const user = {
           .then(res => {
             commit("SET_USER_STATE", true);
             commit("SET_USER_INFO", res.data);
+            Storage.set("userId", res.data.userId);
           })
           .catch(err => {
             console.log(err);
