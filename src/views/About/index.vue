@@ -132,6 +132,7 @@ export default {
           font-size: 14px;
           margin-bottom: 10px;
           position: relative;
+          min-height: 42px;
           .msg-box {
             display: inline-block;
             background: #f6f6f6;
