@@ -2,7 +2,7 @@ import Storage from "@/utils/storage";
 import userApi from "@/api/userApi";
 const user = {
   state: {
-    shssToken: Storage.get("shssToken") || null,
+    shssToken: Storage.get("shssToken") || '',
     loginFormFlag: false,
     userInfo: Storage.get("userInfo")
       ? JSON.parse(Storage.get("userInfo"))
@@ -49,6 +49,8 @@ const user = {
     //登出
     logOut({ commit, state }) {
       commit("SET_TOKEN", "");
+      commit("SET_USER_INFO", "");
+      commit("SET_USER_STATE", false);
       Storage.del("shssToken");
       Storage.del("userInfo");
       Storage.del("userState");

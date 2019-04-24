@@ -15,6 +15,7 @@ router.beforeEach((to, from, next) => {
       next();
       //token不存在登录，路由重定向
     } else {
+      store.dispatch("logOut");
       store.commit("SWITCH_LOGIN_FORM_FLAG", true);
       next(`${from.path}?redirect=${to.path}`);
     }
