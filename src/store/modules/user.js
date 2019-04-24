@@ -35,7 +35,7 @@ const user = {
           .then(res => {
             commit("SET_USER_STATE", true);
             commit("SET_USER_INFO", res.data);
-            Storage.set("userId", res.data.userId);
+            // Storage.set("userId", res.data.userId);
           })
           .catch(err => {
             console.log(err);

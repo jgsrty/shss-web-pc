@@ -36,13 +36,28 @@ export default {
   },
   data() {
     return {
-      userId: "",
+      // userId: "",
       webSocket: null,
       chatContent: "",
       chatList: []
     };
   },
+  computed: {
+    userId: {
+      get() {
+        return this.$store.getters.userInfo.userId;
+      },
+      set() {}
+    }
+  },
+  // watch: {
+  //   userId(val) {
+  //     console.log(val);
+  //   }
+  // },
   mounted() {
+    console.log(this.userId);
+    // return;
     // this.userId = this.$store.getters.userInfo.userId;
     this.userId = Storage.get("userId");
     let socketUrl = "ws://47.98.183.208:8080/webSocket/" + this.userId;
