@@ -8,7 +8,11 @@
         <div class="chat-view flex-direction-column">
           <div class="chat-records">
             <div class="chat-msg" v-for="(item,ind) in chatList" :key="ind">
-              <div class="msg-box" v-if="item.userId">
+              <div
+                class="msg-box"
+                :class="{'self-msg':(item.userId == userInfo.userId)}"
+                v-if="item.userId"
+              >
                 <div class="msg">消息来自id:{{item.userId}}</div>
                 <div class="msg">消息内容:{{item.message}}</div>
               </div>
@@ -127,11 +131,16 @@ export default {
         .chat-msg {
           font-size: 14px;
           margin-bottom: 10px;
+          position: relative;
           .msg-box {
             display: inline-block;
             background: #f6f6f6;
             padding: 5px;
             border-radius: 5px;
+          }
+          .self-msg {
+            position: absolute;
+            right: 5px;
           }
         }
       }
