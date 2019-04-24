@@ -256,7 +256,7 @@ export default {
         // });
         //更新vuex用户信息
         // if (getUserInfo) {
-        this.$store.dispatch("setUserInfo");
+        // this.$store.dispatch("setUserInfo");
         // this.loginState = true;
         // this.userInfo = this.$store.getters.userInfo;
         // }
