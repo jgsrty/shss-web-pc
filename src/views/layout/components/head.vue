@@ -4,30 +4,22 @@
       <div class="logo">{{$t('header.logo')}}</div>
       <div class="navs">
         <span @click="$router.push('/')">{{$t('header.router.index')}}</span>
-        <span @click="$router.push('/about')">{{$t('header.router.about')}}</span>
+        <span @click="$router.push('/about')">聊天室</span>
       </div>
       <div class="menu">
-        <div
-          class="user menu-item"
-          @click="userLogin"
-          v-if="!$store.getters.userState"
-        >{{$t('user.login')}}</div>
+        <div class="user menu-item" @click="userLogin" v-if="!userState">{{$t('user.login')}}</div>
         <div class="user menu-item flex-align-center" v-else>
           <el-dropdown trigger="click" @command="clickUserHead">
             <div class="flex-align-center">
               <div class="user-icon">
-                <img
-                  v-if="$store.getters.userInfo.portrait"
-                  :src="$store.getters.userInfo.portrait"
-                  alt
-                >
+                <img v-if="userInfo.portrait" :src="userInfo.portrait" alt>
                 <img
                   v-else
                   src="http://api.laoyaojing.net/public/uploads/2019-03-07/5c810602a8e03.jpg"
                   alt
                 >
               </div>
-              <div class="user-name">{{$store.getters.userInfo.username}}</div>
+              <div class="user-name">{{userInfo.username}}</div>
             </div>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item command="logout">{{$t('user.logOut')}}</el-dropdown-item>
@@ -141,7 +133,7 @@ export default {
     // loginForm
   },
   computed: {
-    ...mapGetters(["shssToken", "userState"]),
+    ...mapGetters(["shssToken", "userState", "userInfo"]),
     loginFormFlag: {
       get() {
         return this.$store.getters.loginFormFlag;
@@ -200,14 +192,18 @@ export default {
       },
       //登录状态
       loginState: false,
-      //用户信息
-      userInfo: {},
       //按钮loading
       loginLoading: false,
-      registLoading: false
+      registLoading: false,
+      //当前用户信息
+      currentUserInfo: ""
     };
   },
-  mounted() {},
+  mounted() {
+    // if (this.userInfo) {
+    //   this.currentUserInfo = JSON.parse(this.userInfo);
+    // }
+  },
   methods: {
     // 登录
     async submitLoginForm(ref) {
@@ -244,11 +240,15 @@ export default {
           message: `${this.$t("user.logSucc")}`,
           type: "success"
         });
-        //保存token
+        //保存token及用户信息
         this.$store.dispatch("setToken", uToken.data.shssToken);
-        //登录重定向
-        if (this.$route.query.redirect) {
-          this.$router.push({ path: this.$route.query.redirect });
+        let userInfo = await userApi.getInfo();
+        if (userInfo) {
+          this.$store.dispatch("setUserInfo", userInfo.data);
+          //登录重定向
+          if (this.$route.query.redirect) {
+            this.$router.push({ path: this.$route.query.redirect });
+          }
         }
         //拉取用户信息
         // let getUserInfo = await userApi.getInfo({
@@ -256,7 +256,6 @@ export default {
         // });
         //更新vuex用户信息
         // if (getUserInfo) {
-        // this.$store.dispatch("setUserInfo");
         // this.loginState = true;
         // this.userInfo = this.$store.getters.userInfo;
         // }

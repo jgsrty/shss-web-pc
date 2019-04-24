@@ -27,12 +27,12 @@
 </template>
 
 <script>
-// import { mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 import Storage from "@/utils/storage";
 let socket;
 export default {
   computed: {
-    // ...mapGetters(["userInfo", "shssToken", "userState"])
+    ...mapGetters(["userInfo", "shssToken"])
   },
   data() {
     return {
@@ -42,25 +42,8 @@ export default {
       chatList: []
     };
   },
-  computed: {
-    userId: {
-      get() {
-        return this.$store.getters.userInfo.userId;
-      },
-      set() {}
-    }
-  },
-  // watch: {
-  //   userId(val) {
-  //     console.log(val);
-  //   }
-  // },
   mounted() {
-    console.log(this.userId);
-    // return;
-    // this.userId = this.$store.getters.userInfo.userId;
-    this.userId = Storage.get("userId");
-    let socketUrl = "ws://47.98.183.208:8080/webSocket/" + this.userId;
+    let socketUrl = "ws://47.98.183.208:8080/webSocket/" + this.userInfo.userId;
     this.webSocket = new WebSocket(socketUrl);
     this.initWebsocket();
   },
@@ -140,7 +123,7 @@ export default {
       padding: 5px;
       .chat-records {
         height: 380px;
-        overflow: scroll;
+        overflow-y: scroll;
         .chat-msg {
           font-size: 14px;
           margin-bottom: 10px;

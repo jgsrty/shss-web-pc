@@ -11,29 +11,21 @@ router.beforeEach((to, from, next) => {
   //需要登录的页面检查token
   if (to.meta.needLogin) {
     //token存在放行路由
-    if (store.getters.shssToken) {
-      // if (to.path === "/login") {
-      //   next({ path: "/" });
-      // } else {
-      //检测用户信息
-      if (!store.getters.userInfo) {
-        store.dispatch("setUserInfo");
-      }
+    if (store.getters.shssToken && store.getters.userInfo) {
       next();
-      // }
       //token不存在登录，路由重定向
     } else {
       store.commit("SWITCH_LOGIN_FORM_FLAG", true);
       next(`${from.path}?redirect=${to.path}`);
     }
   } else {
-    //无需登录页面检查token，如有token，获取用户信息
-    if (store.getters.shssToken) {
-      if (!store.getters.userInfo) {
-        store.dispatch("setUserInfo");
-      }
-      next();
-    }
+    //无需登录页面
+    // if (store.getters.shssToken) {
+    //   if (!store.getters.userInfo) {
+    //     store.dispatch("setUserInfo");
+    //   }
+    //   next();
+    // }
     next();
   }
 });

@@ -4,8 +4,10 @@ const user = {
   state: {
     shssToken: Storage.get("shssToken") || null,
     loginFormFlag: false,
-    userInfo: '',
-    userState: false
+    userInfo: Storage.get("userInfo")
+      ? JSON.parse(Storage.get("userInfo"))
+      : "",
+    userState: Storage.get("userState") || false
   },
 
   mutations: {
@@ -28,39 +30,28 @@ const user = {
     setToken({ commit }, token) {
       commit("SET_TOKEN", token);
     },
-    setUserInfo({ commit }, token) {
-      return new Promise((resolve, reject) => {
-        userApi
-          .getInfo()
-          .then(res => {
-            commit("SET_USER_STATE", true);
-            commit("SET_USER_INFO", res.data);
-            // Storage.set("userId", res.data.userId);
-          })
-          .catch(err => {
-            console.log(err);
-            reject(err);
-          });
-      });
-    },
-    //登出
-    logOut({ commit, state }) {
-      // ----delete----
-      commit("SET_TOKEN", "");
-      Storage.del("shssToken");
-      // ----delete----
+    setUserInfo({ commit }, data) {
+      commit("SET_USER_STATE", true);
+      Storage.set("userState", true);
+      commit("SET_USER_INFO", data);
+      Storage.set("userInfo", data);
       // return new Promise((resolve, reject) => {
       //   userApi
-      //     .logOut({ token: state.token })
-      //     .then(() => {
-      //       commit("SET_TOKEN", "");
-      //        Storage.del('shssToken');
-      //       resolve();
+      //     .getInfo()
+      //     .then(res => {
       //     })
       //     .catch(err => {
+      //       console.log(err);
       //       reject(err);
       //     });
       // });
+    },
+    //登出
+    logOut({ commit, state }) {
+      commit("SET_TOKEN", "");
+      Storage.del("shssToken");
+      Storage.del("userInfo");
+      Storage.del("userState");
     }
   }
 };
