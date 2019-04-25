@@ -8,6 +8,7 @@
       :key="ind"
     >
       <button @click="bigger(item)">bigger</button>
+      <div>{{Math.floor(Math.random()*100)*Math.floor(Math.random()*100)}}</div>
     </div>
   </div>
 </template>
@@ -41,10 +42,11 @@ export default {
   flex-wrap: wrap;
   justify-content: space-around;
   .list {
-    width: 400px;
-    height: 350px;
+    // width: 400px;
+    // height: 350px;
     background: #f6f6f6;
     margin-bottom: 10px;
+    padding:50px;
   }
   .full-width {
     width: 1200px;
