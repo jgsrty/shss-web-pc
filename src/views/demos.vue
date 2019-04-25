@@ -23,12 +23,13 @@ export default {
     bigger(item) {
       this.activeItem = item;
 
-      document.documentElement.scrollTop = this.$refs[
-        item
-      ][0].offsetTop;
+    //   document.documentElement.scrollTop = this.$refs[
+    //     item
+    //   ][0].offsetTop;
+    // console.log(document.getElementById('scrollBar').scrollTop)
 
-      console.log(document.documentElement.scrollTop);
-      console.log(this.$refs[item][0].offsetTop);
+    //   console.log(document.documentElement.scrollTop);
+    //   console.log(this.$refs[item][0].offsetTop);
     }
   }
 };
