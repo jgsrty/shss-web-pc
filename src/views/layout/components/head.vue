@@ -5,6 +5,7 @@
       <div class="navs">
         <span @click="$router.push('/')">{{$t('header.router.index')}}</span>
         <span @click="$router.push('/about')">聊天室</span>
+        <span @click="$router.push('/demos')">demos</span>
       </div>
       <div class="menu">
         <div class="user menu-item" @click="userLogin" v-if="!userState">{{$t('user.login')}}</div>

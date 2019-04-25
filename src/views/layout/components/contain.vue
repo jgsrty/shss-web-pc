@@ -12,8 +12,8 @@ export default {};
 </script>
 
 <style scoped>
-.main-contain {
+/* .main-contain {
   width: 1200px;
   margin: 0 auto;
-}
+} */
 </style>

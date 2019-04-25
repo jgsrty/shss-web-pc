@@ -6,7 +6,7 @@ Vue.use(Router);
 import Layout from "@/views/layout/layout";
 
 export default new Router({
-  mode: "history",
+  mode:'history',
   routes: [
     {
       path: "/404",
@@ -48,6 +48,23 @@ export default new Router({
               r(require("@/views/About/index.vue"), "About")
             ),
           meta: { title: "关于", url: "/about", needLogin: true }
+        }
+      ]
+    },
+    //demos
+    {
+      path: "/demos",
+      component: Layout,
+      name: "Demos",
+      // redirect: "/demos",
+      children: [
+        {
+          path: "/demos",
+          component: r =>
+            require.ensure([], () =>
+              r(require("@/views/demos.vue"), "Demos")
+            ),
+          meta: { title: "demo", url: "/demos", needLogin: true }
         }
       ]
     }
