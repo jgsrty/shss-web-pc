@@ -22,6 +22,30 @@
       <div class="modules baidu-map">
         <img src="../assets/images/baidu_map_logo.png" alt>
       </div>
+      <div class="modules driving-license">
+        <img src="../assets/images/driving_license_logo.jpg" alt>
+      </div>
+      <div class="modules food-menu">
+        <img src="../assets/images/food_menu_logo.png" alt>
+      </div>
+      <div class="modules jd-financial">
+        <img src="../assets/images/jd_financial.png" alt>
+      </div>
+      <div class="modules company-search">
+        <img src="../assets/images/company_search_logo.png" alt>
+      </div>
+      <div class="modules air-quality">
+        <img src="../assets/images/air_quality_logo.png" alt>
+      </div>
+      <div class="modules car-brands">
+        <img src="../assets/images/car_brands_logo.png" alt>
+      </div>
+      <div class="modules eolinker">
+        <img src="../assets/images/eolinker_logo.png" alt>
+      </div>
+      <div class="modules tencent-developer">
+        <img src="../assets/images/tencent_developer_logo.png" alt>
+      </div>
     </div>
   </div>
 </template>
