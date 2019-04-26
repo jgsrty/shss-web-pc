@@ -71,7 +71,7 @@ export default {};
       border-radius: 5px;
       margin: 10px 10px;
       box-shadow: 0px 0px 10px 0px rgba(192, 196, 204, 1);
-      padding: 15px;
+      padding: 10px;
     }
   }
 }
