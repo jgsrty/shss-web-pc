@@ -64,7 +64,7 @@ export default new Router({
             require.ensure([], () =>
               r(require("@/views/demos.vue"), "Demos")
             ),
-          meta: { title: "demo", url: "/demos", needLogin: true }
+          meta: { title: "demo", url: "/demos", needLogin: false }
         }
       ]
     }
