@@ -15,7 +15,7 @@
       ></div>
     </div>
     <div class="logo-group">
-      <div class="modules" v-for="(item,ind) in logos" :key="ind" :id="item.class">
+      <div class="modules" v-for="(item,ind) in logos" :key="ind" :id="item.class" @click="selectLogo(ind)">
         <img :src="item.src" alt>
       </div>
     </div>
@@ -41,6 +41,10 @@ export default {
     // this.surviveItem = [...this.logos];
   },
   methods: {
+    //选择logo服务
+    selectLogo(ind){
+      console.log(ind)
+    },
     //打响指
     switchGlove() {
       if (this.snapping || this.reversing) return;
@@ -210,6 +214,7 @@ export default {
     }
   }
 }
+//thanos动画
 @keyframes gloveAni {
   0% {
     background-position: 0 0;
