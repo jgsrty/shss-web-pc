@@ -6,6 +6,11 @@
       <div class="body">
         <div class="rooms">rooms</div>
         <div class="chat-view flex-direction-column">
+          <div class="chat-top-notice flex-align-center">
+            <div class="online-num item">当前在线人数：{{onlineNumber}}</div>
+            <div v-show="showJoin" class="user-join item">用户：{{joinUser}} 加入聊天</div>
+            <div v-show="showExit" class="user-exit item">用户：{{exitUser}} 退出聊天</div>
+          </div>
           <div class="chat-records">
             <div class="chat-msg" v-for="(item,ind) in chatList" :key="ind">
               <div
@@ -20,7 +25,7 @@
           </div>
           <div class="chat-tool flex-align-center">toolA toolB toolC</div>
           <div class="chat-input">
-            <input type="text" v-model="chatContent">
+            <input type="text" v-model="chatContent" @keyup.enter="submitChat">
             <el-button type="text" @click="submitChat">发送</el-button>
             <el-button type="text" @click="closeChat">断开连接</el-button>
           </div>
@@ -33,6 +38,7 @@
 <script>
 import { mapGetters } from "vuex";
 import Storage from "@/utils/storage";
+import { setTimeout } from "timers";
 let socket;
 export default {
   computed: {
@@ -43,7 +49,13 @@ export default {
       // userId: "",
       webSocket: null,
       chatContent: "",
-      chatList: []
+      chatList: [],
+      //在线人数
+      onlineNumber: 0,
+      joinUser: "",
+      showJoin: false,
+      exitUser: "",
+      showExit: false
     };
   },
   mounted() {
@@ -65,12 +77,29 @@ export default {
       console.log("onmessage");
       let result = JSON.parse(e.data);
       console.log(result);
-      //非消息数据排除
-      if (result.stateCode != 200) {
-        // console.log(result.data)
+      //userState: 0离开，1进入，2发送消息
+      if (result.userState == 0) {
+        this.onlineNumber = result.onlineNum;
+        this.exitUser = result.userId;
+        this.showExit = true;
+        setTimeout(() => {
+          this.showExit = false;
+        }, 3000);
+      } else if (result.userState == 1) {
+        this.onlineNumber = result.onlineNum;
+        this.joinUser = result.userId;
+        this.showJoin = true;
+        setTimeout(() => {
+          this.showJoin = false;
+        }, 3000);
+      } else if (result.userState == 2) {
         this.chatList.push(result);
-        console.log(this.chatList);
       }
+      //非消息数据排除
+      // if (result.stateCode != 200) {
+      //   // console.log(result.data)
+      //   console.log(this.chatList);
+      // }
     },
     onError() {
       console.log("error");
@@ -125,7 +154,18 @@ export default {
     .chat-view {
       flex: 1;
       padding: 5px;
+      .chat-top-notice {
+        .item {
+          color: #fff;
+          font-size: 14px;
+          margin-left: 10px;
+          padding: 2px 4px;
+          border-radius: 2px;
+          background: $primary-bgColor;
+        }
+      }
       .chat-records {
+        margin-top: 5px;
         height: 380px;
         overflow-y: scroll;
         .chat-msg {
@@ -135,8 +175,9 @@ export default {
           min-height: 42px;
           .msg-box {
             display: inline-block;
-            background: #f6f6f6;
+            background: $primary-bgColor;
             padding: 5px;
+            color: #fff;
             border-radius: 5px;
           }
           .self-msg {

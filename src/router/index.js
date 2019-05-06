@@ -47,7 +47,7 @@ export default new Router({
             require.ensure([], () =>
               r(require("@/views/Chat/index.vue"), "Chat")
             ),
-          meta: { title: "关于", url: "/chat", needLogin: true }
+          meta: { title: "关于", url: "/chat", needLogin: true, keepAlive: true }
         }
       ]
     },
