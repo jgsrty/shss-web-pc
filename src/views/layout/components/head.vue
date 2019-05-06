@@ -4,8 +4,8 @@
       <div class="logo">{{$t('header.logo')}}</div>
       <div class="navs">
         <span @click="$router.push('/')">{{$t('header.router.index')}}</span>
-        <span @click="$router.push('/about')">聊天室</span>
-        <span @click="$router.push('/demos')">demos</span>
+        <span @click="$router.push('/chat')">{{$t('header.router.chat')}}</span>
+        <span @click="$router.push('/demos')">{{$t('header.router.demo')}}</span>
       </div>
       <div class="menu">
         <div class="user menu-item" @click="userLogin" v-if="!userState">{{$t('user.login')}}</div>

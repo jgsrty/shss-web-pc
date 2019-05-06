@@ -4,7 +4,8 @@ const en = {
     logo: "Logo",
     router: {
       index: "Index",
-      about: "About"
+      chat: "Chat",
+      demo: "Demo"
     }
   },
   user: {

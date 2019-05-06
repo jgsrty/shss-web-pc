@@ -35,19 +35,19 @@ export default new Router({
     },
     //about
     {
-      path: "/about",
+      path: "/chat",
       component: Layout,
-      name: "About",
-      redirect: "/about/index",
+      name: "Chat",
+      redirect: "/chat/index",
       // hidden: true,
       children: [
         {
           path: "index",
           component: r =>
             require.ensure([], () =>
-              r(require("@/views/About/index.vue"), "About")
+              r(require("@/views/Chat/index.vue"), "Chat")
             ),
-          meta: { title: "关于", url: "/about", needLogin: true }
+          meta: { title: "关于", url: "/chat", needLogin: true }
         }
       ]
     },

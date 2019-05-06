@@ -4,7 +4,8 @@ const cn = {
     logo: "标志",
     router: {
       index: "首页",
-      about: "关于"
+      chat: "聊天",
+      demo: '实验室'
     }
   },
   user: {
