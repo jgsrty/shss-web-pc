@@ -1,77 +1,113 @@
 <template>
-  <div class="demo-contain">
-    <div class="item-group">
-      <div class="modules baidu-trans">
-        <img src="../assets/images/baidu_trans_logo.png" alt>
+  <div class="home">
+    <!-- banner -->
+    <div class="banner flex-center-center">
+      <div class="trans-input">
+        <el-input v-model="baiduTrans.q" placeholder="请输入内容" size="mini"></el-input>
       </div>
-      <div class="modules youdao-trans">
-        <img src="../assets/images/youdao_trans_logo.png" alt>
-      </div>
-      <div class="modules train-line">
-        <img src="../assets/images/12306_logo.jpg" alt>
-      </div>
-      <div class="modules centre-weather">
-        <img src="../assets/images/centre_weather_logo.png" alt>
-      </div>
-      <div class="modules lottery-logo">
-        <img src="../assets/images/lottery_logo.png" alt>
-      </div>
-      <div class="modules china-news">
-        <img src="../assets/images/china_news_logo.jpg" alt>
-      </div>
-      <div class="modules baidu-map">
-        <img src="../assets/images/baidu_map_logo.png" alt>
-      </div>
-      <div class="modules driving-license">
-        <img src="../assets/images/driving_license_logo.jpg" alt>
-      </div>
-      <div class="modules food-menu">
-        <img src="../assets/images/food_menu_logo.png" alt>
-      </div>
-      <div class="modules jd-financial">
-        <img src="../assets/images/jd_financial.png" alt>
-      </div>
-      <div class="modules company-search">
-        <img src="../assets/images/company_search_logo.png" alt>
-      </div>
-      <div class="modules air-quality">
-        <img src="../assets/images/air_quality_logo.png" alt>
-      </div>
-      <div class="modules car-brands">
-        <img src="../assets/images/car_brands_logo.png" alt>
-      </div>
-      <div class="modules eolinker">
-        <img src="../assets/images/eolinker_logo.png" alt>
-      </div>
-      <div class="modules tencent-developer">
-        <img src="../assets/images/tencent_developer_logo.png" alt>
-      </div>
+      <el-button type="primary" round size="mini" @click="transText">trans</el-button>
     </div>
+    <baidu-map class="bm-view" :center="mapArea" :scroll-wheel-zoom="true">
+      <!-- 地图类型 -->
+      <bm-map-type
+        :map-types="['BMAP_NORMAL_MAP', 'BMAP_HYBRID_MAP']"
+        anchor="BMAP_ANCHOR_TOP_LEFT"
+      ></bm-map-type>
+      <!-- 缩放 有bug -->
+      <!-- <bm-navigation anchor="BMAP_ANCHOR_TOP_RIGHT"></bm-navigation> -->
+      <!-- 缩略图 -->
+      <bm-overview-map anchor="BMAP_ANCHOR_BOTTOM_RIGHT" :isOpen="true"></bm-overview-map>
+      <!-- 交通流量 -->
+      <!-- <bm-traffic :predictDate="{weekday: 7, hour: 12}"></bm-traffic> -->
+      <!-- 定位 -->
+      <bm-geolocation anchor="BMAP_ANCHOR_BOTTOM_LEFT" :showAddressBar="true" :autoLocation="true"></bm-geolocation>
+    </baidu-map>
+    <!-- list -->
   </div>
 </template>
 
 <script>
-export default {};
+import homeIndexApi from "@/api/homeIndexApi";
+import publicApi from "@/api/publicApi";
+import md5 from "js-md5";
+export default {
+  name: "home",
+  data() {
+    return {
+      mapArea: "登封",
+      //百度翻译参数
+      baiduTrans: {
+        url: publicApi.baiduTrans.https, //请求url
+        method: "POST", //请求方法
+        q: "", //翻译文本
+        from: "auto", //翻译源语言 默认auto
+        to: "zh", //译文语言
+        appid: publicApi.baiduTrans.appid, //appid
+        salt: Date.parse(new Date()), //随机数
+        sign: "" //签名=md5(appid+q+salt+密钥)
+      }
+    };
+  },
+  methods: {
+    async transText() {
+      if (this.baiduTrans.q) {
+        this.baiduTrans.sign = md5(
+          this.baiduTrans.appid +
+            this.baiduTrans.q +
+            this.baiduTrans.salt +
+            publicApi.baiduTrans.appsecret
+        );
+        let res = await homeIndexApi.doPostForResult(this.baiduTrans);
+        if (res) {
+          alert(`翻译结果：${res.trans_result[0].dst}`);
+        }
+      } else {
+        this.$message({
+          showClose: true,
+          message: "请输入需要翻译的文本",
+          type: "warning"
+        });
+      }
+    }
+  }
+};
 </script>
 
-<style lang="scss" scoped>
-.demo-contain {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  width: 1200px;
-  margin: 0 auto;
-  .item-group {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    align-items: center;
-    .modules {
-      cursor: pointer;
-      border-radius: 5px;
-      margin: 10px 10px;
-      box-shadow: 0px 0px 10px 0px rgba(192, 196, 204, 1);
-      padding: 10px;
+<style scoped lang="scss">
+.home {
+  .banner {
+    height: 300px;
+    .trans-input {
+      width: 300px;
+      margin-right: 10px;
+    }
+  }
+  .bm-view {
+    width: 100%;
+    height: 500px;
+  }
+  .list {
+    .tabs {
+      margin-bottom: 10px;
+      span {
+        margin-right: 20px;
+      }
+    }
+    .item {
+      .news {
+        display: flex;
+        margin-bottom: 10px;
+        .left {
+          margin-right: 20px;
+          .img {
+            width: 200px;
+            height: 150px;
+            border: 1px solid #cccccc;
+          }
+        }
+        .right {
+        }
+      }
     }
   }
 }
