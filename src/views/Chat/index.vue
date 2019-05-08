@@ -18,7 +18,7 @@
                 :class="{'self-msg':(item.userId == userInfo.userId)}"
                 v-if="item.userId"
               >
-                <div class="msg">消息来自id:{{item.userId}}</div>
+                <div class="msg" v-show="item.userId != userInfo.userId">{{item.username}}</div>
                 <div class="msg">消息内容:{{item.message}}</div>
               </div>
             </div>
@@ -80,14 +80,14 @@ export default {
       //userState: 0离开，1进入，2发送消息
       if (result.userState == 0) {
         this.onlineNumber = result.onlineNum;
-        this.exitUser = result.userId;
+        this.exitUser = result.username;
         this.showExit = true;
         setTimeout(() => {
           this.showExit = false;
         }, 3000);
       } else if (result.userState == 1) {
         this.onlineNumber = result.onlineNum;
-        this.joinUser = result.userId;
+        this.joinUser = result.username;
         this.showJoin = true;
         setTimeout(() => {
           this.showJoin = false;
@@ -174,6 +174,7 @@ export default {
           position: relative;
           min-height: 42px;
           .msg-box {
+            max-width: 370px;
             display: inline-block;
             background: $primary-bgColor;
             padding: 5px;
