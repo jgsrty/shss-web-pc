@@ -16,7 +16,7 @@
                 <img v-if="userInfo.portrait" :src="userInfo.portrait" alt>
                 <img
                   v-else
-                  src="http://api.laoyaojing.net/public/uploads/2019-03-07/5c810602a8e03.jpg"
+                  src="../../../assets/images/users/none-avatar.jpg"
                   alt
                 >
               </div>

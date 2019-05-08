@@ -11,13 +11,17 @@
             <div v-show="showJoin" class="user-join item">用户：{{joinUser}} 加入聊天</div>
             <div v-show="showExit" class="user-exit item">用户：{{exitUser}} 退出聊天</div>
           </div>
-          <div class="chat-records">
-            <div class="chat-msg" v-for="(item,ind) in chatList" :key="ind">
-              <div
-                class="msg-box"
-                :class="{'self-msg':(item.userId == userInfo.userId)}"
-                v-if="item.userId"
-              >
+          <div class="chat-records" ref="chatRecords">
+            <div
+              class="chat-msg"
+              v-for="(item,ind) in chatList"
+              :key="ind"
+              :class="item.userId == userInfo.userId?'chat-msg-row-reverse':''"
+            >
+              <div class="user-avatar">
+                <img src="../../assets/images/users/none-avatar.jpg" alt>
+              </div>
+              <div class="msg-box" v-if="item.userId">
                 <div class="msg" v-show="item.userId != userInfo.userId">{{item.username}}</div>
                 <div class="msg">消息内容:{{item.message}}</div>
               </div>
@@ -94,6 +98,11 @@ export default {
         }, 3000);
       } else if (result.userState == 2) {
         this.chatList.push(result);
+        this.$nextTick(() => {
+          this.$refs["chatRecords"].scrollTop = this.$refs[
+            "chatRecords"
+          ].scrollHeight;
+        });
       }
       //非消息数据排除
       // if (result.stateCode != 200) {
@@ -169,10 +178,19 @@ export default {
         height: 380px;
         overflow-y: scroll;
         .chat-msg {
+          display: flex;
           font-size: 14px;
           margin-bottom: 10px;
           position: relative;
-          min-height: 42px;
+          .user-avatar {
+            width: 30px;
+            height: 30px;
+            img {
+              width: 100%;
+              height: 100%;
+              border-radius: 50%;
+            }
+          }
           .msg-box {
             max-width: 370px;
             display: inline-block;
@@ -180,11 +198,12 @@ export default {
             padding: 5px;
             color: #fff;
             border-radius: 5px;
+            margin: 0 5px;
           }
-          .self-msg {
-            position: absolute;
-            right: 5px;
-          }
+        }
+        .chat-msg-row-reverse {
+          flex-direction: row-reverse;
+          align-items: center;
         }
       }
       .chat-tool {
