@@ -16,13 +16,13 @@
               class="chat-msg"
               v-for="(item,ind) in chatList"
               :key="ind"
-              :class="item.userId == userInfo.userId?'chat-msg-row-reverse':''"
+              :class="item.user.id == userInfo.userId?'chat-msg-row-reverse':''"
             >
               <div class="user-avatar">
-                <img src="../../assets/images/users/none-avatar.jpg" alt>
+                <img :src="item.user.portrait" alt>
               </div>
-              <div class="msg-box" v-if="item.userId">
-                <div class="msg" v-show="item.userId != userInfo.userId">{{item.username}}</div>
+              <div class="msg-box" v-if="item.user.id">
+                <div class="msg" v-show="item.user.id != userInfo.userId">{{item.user.username}}</div>
                 <div class="msg">消息内容:{{item.message}}</div>
               </div>
             </div>
@@ -84,14 +84,14 @@ export default {
       //userState: 0离开，1进入，2发送消息
       if (result.userState == 0) {
         this.onlineNumber = result.onlineNum;
-        this.exitUser = result.username;
+        this.exitUser = result.user.username;
         this.showExit = true;
         setTimeout(() => {
           this.showExit = false;
         }, 3000);
       } else if (result.userState == 1) {
         this.onlineNumber = result.onlineNum;
-        this.joinUser = result.username;
+        this.joinUser = result.user.username;
         this.showJoin = true;
         setTimeout(() => {
           this.showJoin = false;
