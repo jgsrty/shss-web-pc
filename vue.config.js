@@ -6,7 +6,7 @@ module.exports = {
       config.optimization.minimizer[0].options.terserOptions.compress.drop_console = true
     }
   },
-  chainWebpack: config => {
+  chainWebpack (config)  {
     config.resolve.alias
       .set('@', resolve('src'))
     // 移除 prefetch 插件
