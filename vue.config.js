@@ -1,14 +1,14 @@
 const path = require('path')
 module.exports = {
   productionSourceMap: false,
-  configureWebpack: () => ({
-    resolve: {
-      alias: {
-        '@': path.resolve('./src')
-      }
+  configureWebpack:(config) => {
+    if (process.env.NODE_ENV === 'production') {
+      config.optimization.minimizer[0].options.terserOptions.compress.drop_console = true
     }
-  }),
+  },
   chainWebpack: config => {
+    config.resolve.alias
+      .set('@', resolve('src'))
     // 移除 prefetch 插件
     config.plugins.delete('prefetch')
     config.plugin('define').tap(args => {
