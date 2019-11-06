@@ -39,6 +39,7 @@ export default {
   },
   mounted() {
     // this.surviveItem = [...this.logos];
+    console.log(123)
   },
   methods: {
     //选择logo服务
