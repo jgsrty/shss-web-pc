@@ -24,7 +24,7 @@
     "compression-webpack-plugin": "^3.0.0",
     "node-sass": "^4.9.0",
     "normalize.css": "^8.0.1",
-    "qs": "^6.7.0",
+    "qs": "^6.7.3",
     "sass-loader": "^7.1.0",
     "vue-template-compiler": "^2.5.21"
   }
